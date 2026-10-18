@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Классификатор Поездов</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00bcd4;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .tabs-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            background-color: #262626;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .tab-btn {
+            background-color: #333333;
+            color: #bbbbbb;
+            border: none;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background-color: #444444;
+            color: #ffffff;
+        }
+
+        .tab-btn.active {
+            background-color: #00bcd4;
+            color: #1a1a1a;
+            box-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .train-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
+            gap: 20px;
+            max-width: 1300px;
+            margin: 0 auto;
+            justify-content: center;
+        }
+
+        .train-card {
+            background-color: #262626;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid #333;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .train-card:hover {
+            transform: translateY(-5px);
+            border-color: #00bcd4;
+        }
+
+        .train-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background-color: #1f1f1f;
+        }
+
+        .train-info {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .train-info h3 {
+            margin: 0 0 10px 0;
+            color: #00bcd4;
+            font-size: 22px;
+        }
+
+        .train-info p {
+            margin: 0;
+            color: #cccccc;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🚂 Железнодорожный Классификатор</h1>
+
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="openTab(event, 'manevr')">Маневровые тепловозы</button>
+        <button class="tab-btn" onclick="openTab(event, 'magistral')">Магистральные тепловозы</button>
+        <button class="tab-btn" onclick="openTab(event, 'electrovoz')">Электровозы</button>
+        <button class="tab-btn" onclick="openTab(event, 'electrichka')">Электрички</button>
+        <button class="tab-btn" onclick="openTab(event, 'speed')">Скоростные электрички</button>
+        <button class="tab-btn" onclick="openTab(event, 'diesel')">Дизель-поезда</button>
+        <button class="tab-btn" onclick="openTab(event, 'metro')">Метро</button>
+    </div>
+
+    <!-- 1. Маневровые тепловозы -->
+    <div id="manevr" class="tab-content active">
+        <div class="train-grid">
+            <div class="train-card">
+                <img src="ТГМ-4.jpg" alt="ТГМ-4">
+                <div class="train-info">
+                    <h3>ТГМ-4</h3>
+                    <p>Четырёхосный маневровый тепловоз с гидравлической передачей. Отлично подходит для работы на заводских путях и сортировочных станциях.</p>
+                </div>
+            </div>
+            <div class="train-card">
+                <img src="чмэх.jpg" alt="ЧМЭ3">
+                <div class="train-info">
+                    <h3>ЧМЭ3</h3>
+                    <p>Легендарный чехословацкий маневровый тепловоз с электрической передачей. Один из самых массовых и надежных на наших путях.</p>
+                </div>
+            </div>
+            <div class="train-card">
+                <img src="ТЭМ2.jpg" alt="ТЭМ2">
+                <div class="train-info">
+                    <h3>ТЭМ2</h3>
+                    <p>Один из самых массовых советских маневровых тепловозов. Шестиосный гигант, который можно встретить на станциях и крупных заводах по всему СНГ.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Магистральные тепловозы -->
+    <div id="magistral" class="tab-content">
+        <div class="train-grid">
+            <div class="train-card">
+                <img src="ТЕП70.jpg" alt="ТЭП70">
+                <div class="train-info">
+                    <h3>ТЭП70</h3>
+                    <p>Пассажирский магистральный тепловоз. Обладает высокой скоростью и мощностью, создан для вождения тяжелых пассажирских составов на дальние расстояния.</p>
+                </div>
+            </div>
+            <div class="train-card">
+                <img src="2ТЭ116.jpg" alt="2ТЭ116">
+                <div class="train-info">
+                    <h3>2ТЭ116</h3>
+                    <p>Грузовой магистральный двухсекционный тепловоз по прозвищу «Боинг». Главная рабочая лошадка для тяжелых грузовых поездов.</p>
+                </div>
+            </div>
+            <div class="train-card">
+                <img src="ТЭП60.jpg" alt="ТЭП60">
+                <div class="train-info">
+                    <h3>ТЭП60</h3>
+                    <p>Легендарный советский пассажирский тепловоз со стремительным округлым дизайном. В своё время был самым скоростным тепловозом в мире.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Электровозы -->
+    <div id="electrovoz" class="tab-content">
+        <div class="train-grid">
+			<div class="train-card">
+                <img src="ВЛ80.jpg" alt="ВЛ80">
+                <div class="train-info">
+                    <h3>ВЛ80</h3>
+                    <p>Магистральный грузовой электровоз переменного тока. Аббревиатура «ВЛ» означает «Владимир Ленин». Мощный и незаменимый гигант железных дорог.</p>
+                </div>
+            </div>
+			<div class="train-card">
+                <img src="ЧС4Т.jpg" alt="ЧС4Т">
+                <div class="train-info">
+                    <h3>ЧС4Т</h3>
+                    <p>ЧС4Т — Легендарный пассажирский «Теремок»
+Пассажирский электровоз переменного тока, созданный на чехословацком заводе Škoda. За характерную угловатую форму кузова и культовый темно-красный окрас железнодорожники ласково прозвали его «Теремком». Обладает конструкционной скоростью 160 км/ч, мощной реостатной тормозной системой и долгое время оставался главным локомотивом для скорых поездов.</p>
+                </div>
+            </div>
+            <div class="train-card">
+                <img src="ВЛ8.jpg" alt="ВЛ8">
+                <div class="train-info">
+                    <h3>ВЛ8</h3>
+                    <p>Стал первым по-настоящему массовым восьмиосным электровозом в СССР. Он состоит из двух соединённых секций, обладает огромной силой тяги и создавался специально для вождения сверхтяжёлых грузовых составов с углем и рудой на сложных участках дорог.</p>
+                </div>
+            </div>
+			  <div class="train-card">
+                <img src="чебурашка.jpg" alt="ЧС2">
+                <div class="train-info">
+                    <h3>ЧС2</h3>
+                    <p>ЧС2 (Чехословацкий, тип 2) — это, без преувеличения, один из самых узнаваемых и культовых пассажирских электровозов постоянного тока на наших железных дорогах. Созданный на знаменитом заводе Škoda в Пльзене, этот локомотив стал настоящим символом советских скоростных поездов на долгие десятилетия.
+За свой забавный внешний вид с круглыми выступающими стеклами кабин ЧС2 сразу получил в депо теплое и вечное прозвище «Чебурашка».</p>
+                </div>
+            </div>
+            <div class="train-card">
+                <img src="ЧС7.jpg" alt="ЧС7">
+                <div class="train-info">
+                    <h3>ЧС7</h3>
+                    <p>Пассажирский двухсекционный электровоз постоянного тока, построенный в Чехословакии. Мощный, быстрый и очень комфортный для машинистов поезд.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Электрички -->
+    <div id="electrichka" class="tab-content">
+        <div class="train-grid">
+            <div class="train-card">
+                <img src="СР3.jpg" alt="СР-3">
+                <div class="train-info">
+                    <h3>СР-3</h3>
+                    <p>Старинный тип пригородного электропоезда (электрички). Работал на линиях постоянного тока и имеет характерный классический округлый дизайн кузова.</p>
+                </div>
+            </div>
+            <div class="train-card">
+                <img src="ЭР2.jpg" alt="ЭР2">
+                <div class="train-info">
+                    <h3>ЭР2</h3>
+                    <p>Самая знаменитая советская электричка Рижского завода по прозвищу «Глобус» (из-за круглой кабины). Главный пригородный поезд прошлых лет.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Скоростные электрички -->
+    <div id="speed" class="tab-content">
+        <div class="train-grid">
+            <div class="train-card">
+                <img src="ЭР200.jpg" alt="ЭР200">
+                <div class="train-info">
+                    <h3>ЭР200</h3>
+                    <p>Культовый советский скоростной электропоезд. Способен развивать скорость до 200 км/ч, долгие годы курсировал между Москвой и Ленинградом.</p>
+                </div>
+            </div>
+			<div class="train-card">
+                <img src="Сапсан.jpg" alt="Сапсан">
+                <div class="train-info">
+                    <h3>Сапсан</h3>
+                    <p>Современый Русский поезд. Способен развивать скорость до 250 км/ч, он курсировает между Москвой и Санкт-питербургом.</p>
+                </div>
+            </div>
+			<div class="train-card">
+                <img src="ласточка.jpg" alt="Ласточка">
+                <div class="train-info">
+                    <h3>Ласточка</h3>
+                    <p>ЭС1 / ЭС2Г «Ласточка» — Скоростная птица железных дорог
+Современный скоростной электропоезд, разработанный немецким концерном Siemens и выпускаемый на заводе «Уральские локомотивы». Главная фишка модификации ЭС1 — двухсистемность (работает и на постоянном, и на переменном токе). Разгоняется до 160 км/ч, отличается плавным бесшумным ходом и повышенным комфортом для пассажиров.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. Дизель-поезда -->
+    <div id="diesel" class="tab-content">
+        <div class="train-grid">
+            <div class="train-card">
+                <img src="ДР1А.jpg" alt="ДР1А">
+                <div class="train-info">
+                    <h3>ДР1А</h3>
+                    <p>Пассажирский дизель-поезд советского производства. Предназначен для пригородных перевозок на неэлектрифицированных участках железных дорог.</p>
+                </div>
+            </div>
+			<div class="train-card">
+                <img src="Д1.jpg" alt="Д1">
+                <div class="train-info">
+                    <h3>Д1</h3>
+                    <p>1 Пассажирский дизель-поезд советского союза. Предназначен для пригородных перевозок на неэлектрифицированных участках железных дорог.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. Метро -->
+    <div id="metro" class="tab-content">
+        <div class="train-grid">
+            <div class="train-card">
+                <img src="81.717.jpg" alt="81-717 Номерной">
+                <div class="train-info">
+                    <h3>81-717 «Номерной»</h3>
+                    <p>Самый узнаваемый вагон метро в СНГ. Не имеет буквенного названия, только цифровой индекс. Спроектирован для работы под землёй.</p>
+                </div>
+            </div>
+            <div class="train-card">
+                <img src="еж3.jpg" alt="Еж3">
+                <div class="train-info">
+                    <h3>Еж3</h3>
+                    <p>Знаменитый советский вагон метро типа «Еж». Отличается характерным продольным гофрированием бортов кузова и классическим суровым салоном.</p>
+                </div>
+            </div>
+            <div class="train-card">
+                <img src="81.760.jpg" alt="81-760 Ока">
+                <div class="train-info">
+                    <h3>81-760 «Ока»</h3>
+                    <p>Современный вагон метро с плавным ходом, системами кондиционирования и сквозным проходом через весь состав.</p>
+                </div>
+            </div>
+            <div class="train-card">
+                <img src="вагон типа А.jpg" alt="Вагон типа А">
+                <div class="train-info">
+                    <h3>Вагон типа «А»</h3>
+                    <p>Самый первый исторический вагон метро Московского метрополитена, выпускавшийся с 1934 года. Настоящий раритет подземки.</p>
+                </div>
+            </div>
+			<div class="train-card">
+                <img src="81.765.jpg" alt="81.765">
+                <div class="train-info">
+                    <h3>81.765</h3>
+                    <p>81-765 «Москва» — Сквозной поезд метро будущего
+Современный и технологичный тип вагонов метро, разработанный заводом «Метровагонмаш». Главные фишки серии — сквозной межвагонный проход, широкие дверные проёмы, интерактивные карты и кондиционеры с очисткой воздуха. Помимо Москвы, его экспортные модификации успешно работают в метрополитенах Баку, Ташкента и Казани.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- СКРИПТ НА JS ДЛЯ ПЕРЕКЛЮЧЕНИЯ ВКЛАДОК -->
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+
+</body>
+</html>
